@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +31,7 @@ import br.com.fuctura.heitor.dto.AlunoDto;
 import br.com.fuctura.heitor.dto.DetalhesAlunoDto;
 import br.com.fuctura.heitor.model.Aluno;
 import br.com.fuctura.heitor.repository.AlunoRepository;
+import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @RequestMapping("/aluno")
@@ -43,22 +45,24 @@ public class AlunoController {
 		List<Aluno> Alunos = alunoRepository.findAll();
 		return AlunoDto.converter(Alunos);
 	}
-	
+
 	@GetMapping
 	@Cacheable(value = "listaDeAlunos")
-	public Page<AlunoDto> listaAlunos(@RequestParam(required = false) String nomeAluno, 
-			@PageableDefault(sort = "id", direction = Direction.ASC, page = 0, size = 10) Pageable paginacao){
-		
-	  if (nomeAluno == null) {
-	    Page<Aluno> Alunos = alunoRepository.findAll(paginacao);
-	    return AlunoDto.converter(Alunos);
-	  } else {
-	    Page<Aluno> Alunos = alunoRepository.findByNome(nomeAluno, paginacao);
-	    return AlunoDto.converter(Alunos);
-	  }
+	@Operation(summary = "listarAlunos", description = "listar os alunos da escola")
+	public Page<AlunoDto> listaAlunos(@RequestParam(required = false) String nomeAluno,
+			@PageableDefault(sort = "id", direction = Direction.ASC, page = 0, size = 10) Pageable paginacao) {
+
+		if (nomeAluno == null) {
+			Page<Aluno> Alunos = alunoRepository.findAll(paginacao);
+			return AlunoDto.converter(Alunos);
+		} else {
+			Page<Aluno> Alunos = alunoRepository.findByNome(nomeAluno, paginacao);
+			return AlunoDto.converter(Alunos);
+		}
 	}
 
 	@GetMapping("/{id}")
+	@Operation(summary = "detalhar", description = "detalha um aluno de acordo com o Id")
 	public ResponseEntity<DetalhesAlunoDto> detalhar(@PathVariable Long id) {
 		System.out.println("Iniciando");
 		Optional<Aluno> Aluno = alunoRepository.findById(id);
@@ -72,15 +76,17 @@ public class AlunoController {
 
 	@PostMapping
 	@Transactional
+	@CacheEvict(value = "listaDeAlunos", allEntries = true)
 	public ResponseEntity<AlunoDto> cadastrar(@RequestBody @Valid AlunoForm form) {
 		Aluno aluno = form.converterDTO();
 		alunoRepository.save(aluno);
-		
+
 		return new ResponseEntity<AlunoDto>(new AlunoDto(aluno), HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{id}")
 	@Transactional
+	@CacheEvict(value = "listaDeAlunos", allEntries = true)
 	public ResponseEntity<AlunoDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoAlunoForm form) {
 		Optional<Aluno> optional = alunoRepository.findById(id);
 		if (optional.isPresent()) {
@@ -93,6 +99,7 @@ public class AlunoController {
 
 	@DeleteMapping("/{id}")
 	@Transactional
+	@CacheEvict(value = "listaDeAlunos", allEntries = true)
 	public ResponseEntity<?> remover(@PathVariable Long id) {
 		Optional<Aluno> optional = alunoRepository.findById(id);
 		if (optional.isPresent()) {
