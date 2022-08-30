@@ -1,4 +1,4 @@
-package br.com.fuctura.heitor.model;
+package br.com.fuctura.heitor.model.types;
 
 public enum TipoAluno {
 	CONVENCIONAL,

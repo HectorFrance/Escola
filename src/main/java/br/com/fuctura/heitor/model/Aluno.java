@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import br.com.fuctura.heitor.dto.AlunoDto;
+import br.com.fuctura.heitor.model.types.TipoAluno;
 
 @Table
 @Entity
