@@ -26,6 +26,8 @@ public class ProfessorController {
 		if (nomeProfessor == null) {
 			Page<Professor> professores = professorRepository.findAll(paginacao);
 			return ProfessorDto.converter(professores);
+		}else {
+			Page<Professor> professores = professorRepository.findBynome();
 		}
 	}
 }
