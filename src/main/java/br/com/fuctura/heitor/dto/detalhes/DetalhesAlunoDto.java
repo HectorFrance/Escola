@@ -1,4 +1,4 @@
-package br.com.fuctura.heitor.dto;
+package br.com.fuctura.heitor.dto.detalhes;
 
 import br.com.fuctura.heitor.model.Aluno;
 import lombok.Data;

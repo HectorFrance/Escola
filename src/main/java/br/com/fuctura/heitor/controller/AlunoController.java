@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.fuctura.heitor.controller.form.AlunoForm;
 import br.com.fuctura.heitor.controller.form.AtualizacaoAlunoForm;
 import br.com.fuctura.heitor.dto.AlunoDto;
-import br.com.fuctura.heitor.dto.DetalhesAlunoDto;
+import br.com.fuctura.heitor.dto.detalhes.DetalhesAlunoDto;
 import br.com.fuctura.heitor.model.Aluno;
 import br.com.fuctura.heitor.repository.AlunoRepository;
 import io.swagger.v3.oas.annotations.Operation;
