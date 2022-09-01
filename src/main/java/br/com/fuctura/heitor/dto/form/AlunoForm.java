@@ -1,4 +1,4 @@
-package br.com.fuctura.heitor.controller.form;
+package br.com.fuctura.heitor.dto.form;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

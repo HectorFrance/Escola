@@ -1,4 +1,4 @@
-package br.com.fuctura.heitor.controller.form;
+package br.com.fuctura.heitor.dto.form;
 
 import java.util.Optional;
 

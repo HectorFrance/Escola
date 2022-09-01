@@ -25,10 +25,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.fuctura.heitor.controller.form.AlunoForm;
-import br.com.fuctura.heitor.controller.form.AtualizacaoAlunoForm;
 import br.com.fuctura.heitor.dto.AlunoDto;
 import br.com.fuctura.heitor.dto.detalhes.DetalhesAlunoDto;
+import br.com.fuctura.heitor.dto.form.AlunoForm;
+import br.com.fuctura.heitor.dto.form.AtualizacaoAlunoForm;
 import br.com.fuctura.heitor.model.Aluno;
 import br.com.fuctura.heitor.repository.AlunoRepository;
 import io.swagger.v3.oas.annotations.Operation;
@@ -64,11 +64,9 @@ public class AlunoController {
 	@GetMapping("/{id}")
 	@Operation(summary = "detalhar", description = "detalha um aluno de acordo com o Id")
 	public ResponseEntity<DetalhesAlunoDto> detalhar(@PathVariable Long id) {
-		System.out.println("Iniciando");
 		Optional<Aluno> Aluno = alunoRepository.findById(id);
 		if (Aluno.isPresent()) {
 			return ResponseEntity.ok(new DetalhesAlunoDto(Aluno.get()));
-
 		}
 
 		return ResponseEntity.notFound().build();
