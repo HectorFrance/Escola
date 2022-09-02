@@ -24,8 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fuctura.heitor.dto.CursoDto;
 import br.com.fuctura.heitor.dto.detalhes.DetalhesCruso;
-import br.com.fuctura.heitor.dto.form.AtualizacaoCursoForm;
 import br.com.fuctura.heitor.dto.form.CursoForm;
+import br.com.fuctura.heitor.dto.form.atualizacao.AtualizacaoCursoForm;
 import br.com.fuctura.heitor.model.Curso;
 import br.com.fuctura.heitor.repository.CursoRepository;
 import io.swagger.v3.oas.annotations.Operation;

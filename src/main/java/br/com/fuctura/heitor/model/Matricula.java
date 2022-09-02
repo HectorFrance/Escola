@@ -37,6 +37,12 @@ public class Matricula {
 		this.aluno = aluno;
 		this.dataMatricula = dataMatricula;
 	}
+	public Matricula(Turma turma, Aluno aluno, LocalDateTime dataMatricula) {
+		super();
+		this.turma = turma;
+		this.aluno = aluno;
+		this.dataMatricula = dataMatricula;
+	}
 
 	public Long getId() {
 		return id;

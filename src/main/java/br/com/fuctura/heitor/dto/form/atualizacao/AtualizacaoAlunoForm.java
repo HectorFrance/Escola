@@ -1,4 +1,4 @@
-package br.com.fuctura.heitor.dto.form;
+package br.com.fuctura.heitor.dto.form.atualizacao;
 
 import java.util.Optional;
 

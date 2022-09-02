@@ -12,6 +12,5 @@ public interface AlunoRepository extends JpaRepository<Aluno, Long> {
 
 	Page<Aluno> findByNome(String nomeAluno, Pageable paginacao);
 
-	List<Aluno> findByCpf(String cpf);
-
+	Aluno findByCpf(String cpf);
 }

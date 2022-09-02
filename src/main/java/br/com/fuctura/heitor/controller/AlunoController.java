@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.fuctura.heitor.dto.AlunoDto;
 import br.com.fuctura.heitor.dto.detalhes.DetalhesAlunoDto;
 import br.com.fuctura.heitor.dto.form.AlunoForm;
-import br.com.fuctura.heitor.dto.form.AtualizacaoAlunoForm;
+import br.com.fuctura.heitor.dto.form.atualizacao.AtualizacaoAlunoForm;
 import br.com.fuctura.heitor.model.Aluno;
 import br.com.fuctura.heitor.repository.AlunoRepository;
 import io.swagger.v3.oas.annotations.Operation;
@@ -75,6 +75,7 @@ public class AlunoController {
 	@PostMapping
 	@Transactional
 	@CacheEvict(value = "listaDeAlunos", allEntries = true)
+	@Operation(summary = "cadastrar", description = "Cadastra um aluno na escola")
 	public ResponseEntity<AlunoDto> cadastrar(@RequestBody @Valid AlunoForm form) {
 		Aluno aluno = form.converterDTO();
 		alunoRepository.save(aluno);
@@ -85,6 +86,7 @@ public class AlunoController {
 	@PutMapping("/{id}")
 	@Transactional
 	@CacheEvict(value = "listaDeAlunos", allEntries = true)
+	@Operation(summary = "atualizar", description = "Atualiza os dados de um aluno pelo id")
 	public ResponseEntity<AlunoDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoAlunoForm form) {
 		Optional<Aluno> optional = alunoRepository.findById(id);
 		if (optional.isPresent()) {
@@ -98,6 +100,7 @@ public class AlunoController {
 	@DeleteMapping("/{id}")
 	@Transactional
 	@CacheEvict(value = "listaDeAlunos", allEntries = true)
+	@Operation(summary = "Remover", description = "Remove um Aluno por id")
 	public ResponseEntity<?> remover(@PathVariable Long id) {
 		Optional<Aluno> optional = alunoRepository.findById(id);
 		if (optional.isPresent()) {

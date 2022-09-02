@@ -24,8 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fuctura.heitor.dto.ProfessorDto;
 import br.com.fuctura.heitor.dto.detalhes.DetalhesProfessorDto;
-import br.com.fuctura.heitor.dto.form.AutalizacaoProfessorForm;
 import br.com.fuctura.heitor.dto.form.ProfessorForm;
+import br.com.fuctura.heitor.dto.form.atualizacao.AutalizacaoProfessorForm;
 import br.com.fuctura.heitor.model.Professor;
 import br.com.fuctura.heitor.repository.ProfessorRepository;
 import io.swagger.v3.oas.annotations.Operation;
