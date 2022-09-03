@@ -50,7 +50,7 @@ public class MatriculaController {
 			Page<Matricula> matriculas = matriculaRepository.findAll(paginacao);
 			return MatriculaDto.converter(matriculas);
 		} else {
-			Aluno a = alunoRepository.findByCpf(nomeAluno);
+			Aluno a = alunoRepository.findByNome(nomeAluno);
 			Page<Matricula> matriculas = matriculaRepository.findByAluno(a, paginacao);
 			return MatriculaDto.converter(matriculas);
 		}

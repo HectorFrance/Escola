@@ -1,8 +1,13 @@
 package br.com.fuctura.heitor.controller;
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -25,12 +30,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lowagie.text.DocumentException;
+
 import br.com.fuctura.heitor.dto.AlunoDto;
 import br.com.fuctura.heitor.dto.detalhes.DetalhesAlunoDto;
 import br.com.fuctura.heitor.dto.form.AlunoForm;
 import br.com.fuctura.heitor.dto.form.atualizacao.AtualizacaoAlunoForm;
 import br.com.fuctura.heitor.model.Aluno;
+import br.com.fuctura.heitor.report.AlunoPDFExporter;
 import br.com.fuctura.heitor.repository.AlunoRepository;
+import br.com.fuctura.heitor.service.AlunoServices;
 import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
@@ -39,6 +48,9 @@ public class AlunoController {
 
 	@Autowired
 	private AlunoRepository alunoRepository;
+
+	@Autowired
+	private AlunoServices alunoServices;
 
 	@GetMapping("/todos")
 	public List<AlunoDto> listaAlunos() {
@@ -109,5 +121,21 @@ public class AlunoController {
 		}
 
 		return ResponseEntity.notFound().build();
+	}
+
+	@GetMapping("/relatorio-pdf")
+	public void exportarRelatorioPDF(HttpServletResponse response) throws DocumentException, IOException {
+		response.setContentType("application/pdf");
+		DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+		String currentDateTime = dateFormatter.format(new Date());
+
+		String headerKey = "Content-Disposition";
+		String headerValue = "attachment; filename=alunos_relatorio" + currentDateTime + ".pdf";
+		response.setHeader(headerKey, headerValue);
+
+		List<Aluno> listaAlunos = alunoServices.listarTodosAlunos();
+
+		AlunoPDFExporter exporter = new AlunoPDFExporter(listaAlunos);
+		exporter.export(response);
 	}
 }
